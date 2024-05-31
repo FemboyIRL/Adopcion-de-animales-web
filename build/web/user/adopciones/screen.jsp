@@ -11,22 +11,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Adopción de Animales</title>
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     </head>
     <body>
-         <nav class="navbar">
-        <div class="navbar-container">
-            <a href="../../index.jsp" class="navbar-logo">
-                <img src="../../assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
-            </a>
-            <ul class="navbar-menu">
-                <li><a href="../../index.jsp">Inicio</a></li>
-                <li><a href="screen.jsp">Adopciones</a></li>
-                <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
-                <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
-            </ul>
-            <button class="navbar-login">Iniciar sesión</button>
-        </div>
-    </nav>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.jsp" class="navbar-logo">
+                    <img src="../../assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
+                </a>
+                <ul class="navbar-menu">
+                    <li><a href="../../index.jsp">Inicio</a></li>
+                    <li><a href="screen.jsp">Adopciones</a></li>
+                    <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
+                    <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                </ul>
+                <% if (session.getAttribute("usuario") != null) { %>
+                <div class="account">
+                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
+                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                </div>
+
+                <% } else { %>
+                <button class="navbar-login" onclick="window.location.href = 'registerlogin/screen.jsp'">Iniciar sesión</button>
+                <% } %>
+            </div>
+        </nav>
         <header>
             <h1>Adopción de Animales</h1>
         </header>
@@ -48,7 +58,7 @@
                         <option value="Adulto">Adulto</option>
                     </select>
 
-                    <label for="tamaño">Tamaño:</label>
+                    <label for="tamaño">Raza:</label>
                     <select id="tamaño" name="tamaño">
                         <option value="todos">Todos</option>
                         <option value="Pequeño">Pequeño</option>
@@ -67,20 +77,23 @@
 
                             private int id;
                             private String nombre;
-                            private String edad;
+                            private int edad;
                             private String especie;
-                            private String size;
-                            private String imagen;
+                            private String raza;
+                            private String otrasCaracteristicas;
+                            private int idUsuario;
 
-                            public Animal(int id, String nombre, String edad, String especie, String size, String imagen) {
+                            public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario) {
                                 this.id = id;
                                 this.nombre = nombre;
                                 this.edad = edad;
                                 this.especie = especie;
-                                this.size = size;
-                                this.imagen = imagen;
+                                this.raza = raza;
+                                this.otrasCaracteristicas = otrasCaracteristicas;
+                                this.idUsuario = idUsuario;
                             }
 
+                            // Getters
                             public int getId() {
                                 return id;
                             }
@@ -89,7 +102,7 @@
                                 return nombre;
                             }
 
-                            public String getEdad() {
+                            public int getEdad() {
                                 return edad;
                             }
 
@@ -97,30 +110,27 @@
                                 return especie;
                             }
 
-                            public String getSize() {
-                                return size;
+                            public String getRaza() {
+                                return raza;
                             }
 
-                            public String getImagen() {
-                                return imagen;
+                            public String getOtrasCaracteristicas() {
+                                return otrasCaracteristicas;
+                            }
+
+                            public int getIdUsuario() {
+                                return idUsuario;
                             }
                         }
 
                         String url = "jdbc:sqlite:/C:/Users/luisr/OneDrive/Escritorio/Escuela del mal/Desarrollo web/Paginas/Adopcion de animales web/web/assets/bd/centroAdopcion.db";
                         List<Animal> animales = new ArrayList<Animal>();
                         String especie = request.getParameter("especie");
-                        String edad = request.getParameter("edad");
-                        String tamaño = request.getParameter("tamaño");
 
-                        StringBuilder sql = new StringBuilder("SELECT * FROM animales WHERE 1=1");
+
+                        StringBuilder sql = new StringBuilder("SELECT * FROM Mascotas WHERE 1=1");
                         if (especie != null && !especie.equals("todos")) {
                             sql.append(" AND especie = ?");
-                        }
-                        if (edad != null && !edad.equals("todas")) {
-                            sql.append(" AND edad = ?");
-                        }
-                        if (tamaño != null && !tamaño.equals("todos")) {
-                            sql.append(" AND size = ?");
                         }
 
                         try {
@@ -132,12 +142,7 @@
                             if (especie != null && !especie.equals("todos")) {
                                 pstmt.setString(paramIndex++, especie);
                             }
-                            if (edad != null && !edad.equals("todas")) {
-                                pstmt.setString(paramIndex++, edad);
-                            }
-                            if (tamaño != null && !tamaño.equals("todos")) {
-                                pstmt.setString(paramIndex++, tamaño);
-                            }
+
 
                             ResultSet rs = pstmt.executeQuery();
 
@@ -147,12 +152,13 @@
 
                             while (rs.next()) {
                                 Animal animal = new Animal(
-                                        rs.getInt("id"),
-                                        rs.getString("nombre"),
-                                        rs.getString("edad"),
-                                        rs.getString("especie"),
-                                        rs.getString("size"),
-                                        rs.getString("imagen")
+                                        rs.getInt("ID"),
+                                        rs.getString("Nombre"),
+                                        rs.getInt("Edad"),
+                                        rs.getString("Especie"),
+                                        rs.getString("Raza"),
+                                        rs.getString("OtrasCaracteristicas"),
+                                        rs.getInt("IDUsuario")
                                 );
                                 animales.add(animal);
                             }
@@ -168,7 +174,7 @@
                         for (Animal animal : animales) {
                     %>
                     <div class="card" onclick="location.href = 'animal.jsp?nombre=<%= animal.getNombre()%>';">
-                        <img src="../../<%= animal.getImagen()%>" alt="<%= animal.getNombre()%>">
+                        <img src="../../assets/images/mascotas/<%= animal.getId()%>.jpg" alt="<%= animal.getNombre()%>">
                         <div class="intro">
                             <h3><%= animal.getNombre()%></h3>
                             <p>Edad: <%= animal.getEdad()%></p>

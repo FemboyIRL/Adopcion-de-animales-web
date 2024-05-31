@@ -13,11 +13,11 @@
             String nombreUsuario = request.getParameter("txt");
             String correo = request.getParameter("email");
             String contrasena = request.getParameter("pswd");
-            String tipoUsuario = "ciudadano"; 
-            String estadoSesion = "cerrada"; 
+            String tipoUsuario = "ciudadano";
+            String estadoSesion = "cerrada";
 
             if (nombreUsuario == null || correo == null || contrasena == null || nombreUsuario.isEmpty() || correo.isEmpty() || contrasena.isEmpty()) {
-               response.sendRedirect("screen.jsp?errorCampos=1");
+                response.sendRedirect("screen.jsp?errorCampos=1");
             } else {
                 Connection conn = null;
                 PreparedStatement stmt = null;
@@ -42,7 +42,7 @@
                         response.sendRedirect("screen.jsp?errorRegistro=1");
                     }
                 } catch (Exception e) {
-                    response.sendRedirect("screen.jsp?error=1&mensaje=" + e.getMessage());
+                    response.sendRedirect("login.jsp?error=1&mensaje=" + e.getMessage());
                 } finally {
                     if (stmt != null) {
                         try {

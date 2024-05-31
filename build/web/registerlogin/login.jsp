@@ -33,11 +33,11 @@
                 
                 response.sendRedirect("../index.jsp?loginExitoso=1");
             } else {
-                response.sendRedirect("login.jsp?errorCredenciales=1");
+                response.sendRedirect("screen.jsp?errorCredenciales=1");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("login.jsp?error=1&mensaje=" + e.getMessage());
+            response.sendRedirect("screen.jsp?error=1&mensaje=" + e.getMessage());
         } finally {
             if (rs != null) {
                 try {

@@ -1,10 +1,10 @@
 /* NavBar*/
 .navbar {
-  background-color: #b4ae91;
-  padding: 1rem;
-  position: sticky;
-  top: 0; 
-  z-index: 1000; 
+    background-color: #b4ae91;
+    padding: 1rem;
+    position: sticky;
+    top: 0; 
+    z-index: 1000; 
 }
 
 .navbar-container {
@@ -124,7 +124,7 @@ span {
     color: #b4ae91;     
 }
 
-.adopt-pet {
+.adopt-pet, .ultimas-publicaciones {
     text-align: center;
     margin-bottom: 20px; 
 }
@@ -164,14 +164,91 @@ span {
     color: #333;
 }
 
-.row3 {
+.row{
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 24px; 
 }
 
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    color: #333; 
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logout-button i {
+    margin-right: 5px; 
+}
+
+
 footer{
     height: 50px;
     background-color: #b4ae91;
 }
+
+#success {
+   display: none;
+    background-color: rgba(40, 167, 69, 0.3);
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: slide-in 0.5s ease-in-out;
+    color: white;
+}
+
+#success:hover {
+    background-color: rgba(40, 167, 69, 1);
+}
+
+.dog-button {
+    background-color: #ffcc66; /* Warm yellow color */
+    color: #333; /* Dark text for contrast */
+    padding: 15px 30px; /* Padding for a larger clickable area */
+    border: 2px solid #ff9900; /* Slightly darker border */
+    border-radius: 10px; /* Rounded corners for a friendly look */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+    display: inline-block; /* Ensure it's inline-block */
+}
+
+.dog-button:hover {
+    background-color: #ff9900; /* Darker yellow on hover */
+    color: white; /* White text on hover */
+}
+
+.dog-button:active {
+    background-color: #cc7a00; /* Even darker yellow when active */
+    color: white; /* White text when active */
+}
+
+.dog-button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for focus */
+}
+
+
+@keyframes slide-in {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
