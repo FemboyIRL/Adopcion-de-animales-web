@@ -1,3 +1,61 @@
+<%
+    class Animal {
+
+        private int id;
+        private String nombre;
+        private int edad;
+        private String especie;
+        private String raza;
+        private String otrasCaracteristicas;
+        private int idUsuario;
+        private String Sexo;
+
+        public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario, String Sexo) {
+            this.id = id;
+            this.nombre = nombre;
+            this.edad = edad;
+            this.especie = especie;
+            this.raza = raza;
+            this.otrasCaracteristicas = otrasCaracteristicas;
+            this.idUsuario = idUsuario;
+            this.Sexo = Sexo;
+        }
+
+        // Getters
+        public int getId() {
+            return id;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public int getEdad() {
+            return edad;
+        }
+
+        public String getEspecie() {
+            return especie;
+        }
+
+        public String getRaza() {
+            return raza;
+        }
+
+        public String getOtrasCaracteristicas() {
+            return otrasCaracteristicas;
+        }
+
+        public int getIdUsuario() {
+            return idUsuario;
+        }
+
+        public String getSexo() {
+            return Sexo;
+        }
+    }
+%>
+
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -10,7 +68,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Adopción de Animales</title>
-        <link rel="stylesheet" href="styles.css">
+        
+        <link rel="stylesheet" href="stylesAnimal.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     </head>
@@ -38,7 +98,7 @@
             </div>
         </nav>
         <header>
-            <h1>Adopción de Animales</h1>
+            <h1>Adopciones</h1>
         </header>
         <main>
             <section class="filtros">
@@ -73,60 +133,9 @@
                 <h2>Animales Disponibles para Adopción</h2>
                 <div id="lista-animales">
                     <%
-                        class Animal {
-
-                            private int id;
-                            private String nombre;
-                            private int edad;
-                            private String especie;
-                            private String raza;
-                            private String otrasCaracteristicas;
-                            private int idUsuario;
-
-                            public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario) {
-                                this.id = id;
-                                this.nombre = nombre;
-                                this.edad = edad;
-                                this.especie = especie;
-                                this.raza = raza;
-                                this.otrasCaracteristicas = otrasCaracteristicas;
-                                this.idUsuario = idUsuario;
-                            }
-
-                            // Getters
-                            public int getId() {
-                                return id;
-                            }
-
-                            public String getNombre() {
-                                return nombre;
-                            }
-
-                            public int getEdad() {
-                                return edad;
-                            }
-
-                            public String getEspecie() {
-                                return especie;
-                            }
-
-                            public String getRaza() {
-                                return raza;
-                            }
-
-                            public String getOtrasCaracteristicas() {
-                                return otrasCaracteristicas;
-                            }
-
-                            public int getIdUsuario() {
-                                return idUsuario;
-                            }
-                        }
-
                         String url = "jdbc:sqlite:/C:/Users/luisr/OneDrive/Escritorio/Escuela del mal/Desarrollo web/Paginas/Adopcion de animales web/web/assets/bd/centroAdopcion.db";
                         List<Animal> animales = new ArrayList<Animal>();
                         String especie = request.getParameter("especie");
-
 
                         StringBuilder sql = new StringBuilder("SELECT * FROM Mascotas WHERE 1=1");
                         if (especie != null && !especie.equals("todos")) {
@@ -143,7 +152,6 @@
                                 pstmt.setString(paramIndex++, especie);
                             }
 
-
                             ResultSet rs = pstmt.executeQuery();
 
                             if (!rs.isBeforeFirst()) { // No hay resultados
@@ -158,7 +166,8 @@
                                         rs.getString("Especie"),
                                         rs.getString("Raza"),
                                         rs.getString("OtrasCaracteristicas"),
-                                        rs.getInt("IDUsuario")
+                                        rs.getInt("IDUsuario"),
+                                        rs.getString("Sexo")
                                 );
                                 animales.add(animal);
                             }
@@ -173,11 +182,11 @@
 
                         for (Animal animal : animales) {
                     %>
-                    <div class="card" onclick="location.href = 'animal.jsp?nombre=<%= animal.getNombre()%>';">
+                    <div class="card" onclick="location.href = '../animal/screen.jsp?id=<%= animal.getId()%>';">
                         <img src="../../assets/images/mascotas/<%= animal.getId()%>.jpg" alt="<%= animal.getNombre()%>">
                         <div class="intro">
                             <h3><%= animal.getNombre()%></h3>
-                            <p>Edad: <%= animal.getEdad()%></p>
+                            <p>Edad: <%= animal.getEdad()%> meses</p>
                             <p>Especie: <%= animal.getEspecie()%></p>
                         </div>
                     </div>

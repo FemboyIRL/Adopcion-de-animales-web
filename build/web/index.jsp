@@ -12,25 +12,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pantalla de Inicio - Patitas Felices Veterinaria</title>
         <script defer src="script.js"></script>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="stylesIndex.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
     <body>
         <nav class="navbar">
             <div class="navbar-container">
-                <a href="../inicio/screen.jsp" class="navbar-logo">
+                <a href="index.jsp" class="navbar-logo">
                     <img src="assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
                 </a>
                 <ul class="navbar-menu">
-                    <li><a href="../inicio/screen.jsp">Inicio</a></li>
+                    <li><a href="index.jsp">Inicio</a></li>
                     <li><a href="user/adopciones/screen.jsp">Adopciones</a></li>
-                    <li><a href="como_adoptar.jsp">¿Cómo adoptar?</a></li>
-                    <li><a href="dar_adopcion.jsp">Dar en adopción</a></li>
+                    <li><a href="user/como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
+                    <li><a href="user/dar_adopcion/screen.jsp">Dar en adopción</a></li>
                 </ul>
                 <% if (session.getAttribute("usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = 'logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
@@ -45,7 +45,9 @@
                     <div class="hero-content">
                         <h1>Bienvenido a Patitas Felices Veterinaria</h1>
                         <p>Tu mejor amigo merece el mejor cuidado. Descubre más sobre nuestros servicios y cómo puedes adoptar o dar en adopción a una mascota.</p>
-                        <a href="adopciones.jsp" class="cta-button">Ver adopciones</a>
+                        <button onclick="window.location.href = 'user/adopciones/screen.jsp'">   
+                            Ver adopciones
+                        </button>
                     </div>
                     <div class="hero-image">
                         <img src="assets/images/animales.jpg" alt="Patitas Felices">
@@ -78,7 +80,9 @@
                     <div class="hero-content">
                         <h1>Encuentra un <span>amigo</span> de Verdad</h1>                        
                         <p>Esta comprobado que tener una mascota en tu hogar mejora tu salud y humor.</p>
-                        <a href="adopciones.jsp" class="cta-button">BUSCAR MASCOTAS</a>
+                        <button onclick="window.location.href = 'user/adopciones/screen.jsp'">   
+                            BUSCAR MASCOTAS
+                        </button>
                     </div>
                     <div class="hero-image">
                         <img src="assets/images/michi-atento.jpg" alt="Patitas Felices">
@@ -181,23 +185,7 @@
                 </div>
                 <% } %>
             </div>
-            <button class="dog-button">Ver más</button>
-        </div>
-
-        <div class="row5">
-            <div class="perros-adopcion">
-
-            </div>
-        </div>
-        <div class="row6">
-            <div class="gatos-adopcion">
-
-            </div>
-        </div>
-        <div class="row7">
-            <div class="otros-adopcion">
-
-            </div>
+            <button>Ver más</button>
         </div>
         <div id="success">
             <%
