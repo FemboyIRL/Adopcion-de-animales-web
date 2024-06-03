@@ -36,9 +36,9 @@
                 String errorRegistro = request.getParameter("errorRegistro");
                 String errorCredenciales = request.getParameter("errorCredenciales");
                 String error = request.getParameter("error");
+                String errorSesion = request.getParameter("errorSesion");
 
                 if (errorCampos != null) {
-
                     out.print("<i class='fa-solid fa-circle-exclamation'></i> Todos los campos son obligatorios");
                 } else if (errorRegistro != null) {
                     out.print("<i class='fa-solid fa-circle-exclamation'></i> Error al realizar el registro");
@@ -47,16 +47,19 @@
                     out.print("<i class='fa-solid fa-circle-exclamation'></i> " + (mensajeError != null ? mensajeError : "Error desconocido"));
                 } else if (errorCredenciales != null) {
                     out.print("<i class='fa-solid fa-circle-exclamation'></i> Usuario o contraseña incorrectos");
+                } else if (errorSesion != null) {
+                    out.print("<i class='fa-solid fa-circle-exclamation'></i> Necesitas una cuenta antes de adoptar");
                 }
             %>
         </div>
-            <div id="success">
-                <%
+        <div id="success">
+            <%
                 String registroExistoso = request.getParameter("registroExitoso");
+
                 if (registroExistoso != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Registro exitoso");
                 }
-                %>
-            </div>
+            %>
+        </div>
     </body>
 </html>

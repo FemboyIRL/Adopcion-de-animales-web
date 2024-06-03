@@ -86,7 +86,7 @@
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
                 </ul>
-                <% if (session.getAttribute("usuario") != null) { %>
+                <% if (session.getAttribute("id") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
                     <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>

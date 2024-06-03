@@ -28,6 +28,8 @@
 
             if (rs.next()) {
                 String nombreUsuario = rs.getString("NombreUsuario");
+                String id = rs.getString("id");
+                session.setAttribute("id", id);
                 session.setAttribute("usuario", nombreUsuario);
                 session.setAttribute("email", correo);
                 

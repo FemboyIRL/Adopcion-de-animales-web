@@ -1,5 +1,5 @@
 <%
-    class Usuario {
+     class Usuario {
 
         private int id;
         private String nombreUsuario;
@@ -48,7 +48,7 @@
         }
     }
 
-    class Animal {
+     class Animal {
 
         private int id;
         private String nombre;
@@ -222,7 +222,7 @@
             </div>
             <div class="right-column">
                 <div class="card" id="datosAnimal">
-                    <form action="solicitud_adopcion.jsp" method="post">
+                    <form action="solicitarAdopcion.jsp" method="post">
                         <div class="animal-detalle">
                             <h2>Hola, mi nombre es <span><%= animal.getNombre()%></span></h2>
                             <p><span>Especie:</span> <%= animal.getEspecie()%></p>

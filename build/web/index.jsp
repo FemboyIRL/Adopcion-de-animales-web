@@ -191,18 +191,23 @@
             <%
                 String loginExitoso = request.getParameter("loginExitoso");
                 String sesionCerrada = request.getParameter("sesionCerrada");
+                String registroMascota = request.getParameter("registroMascota");
 
                 if (loginExitoso
                         != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Inicio de sesión exitoso");
+                    return;
                 } else if (sesionCerrada
                         != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Sesión cerrada exitosamente");
+                    return;
+                } else if (registroMascota != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> Mascota dada en adopciön correctamente");
+                    return;
                 }
             %>
         </div>
         <footer>
-
         </footer>
     </body>
 </html>
