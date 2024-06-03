@@ -12,26 +12,27 @@
         <script defer src="script.js"></script>
     </head>
     <body>
-        <nav class="navbar">
+          <nav class="navbar">
             <div class="navbar-container">
-                <a href="index.jsp" class="navbar-logo">
+                <a href="../../index.jsp" class="navbar-logo">
                     <img src="../../assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
                 </a>
                 <ul class="navbar-menu">
-                    <li><a href="index.jsp">Inicio</a></li>
-                    <li><a href="user/adopciones/screen.jsp">Adopciones</a></li>
-                    <li><a href="user/como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
-                    <li><a href="user/dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                    <li><a href="../../index.jsp">Inicio</a></li>
+                    <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
+                    <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
+                    <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
                 </ul>
-                <% if (session.getAttribute("usuario") != null) { %>
+                <% if (session.getAttribute(
+                            "usuario") != null) { %>
                 <div class="account">
-                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = 'logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
                 <button class="navbar-login" onclick="window.location.href = 'registerlogin/screen.jsp'">Iniciar sesión</button>
-                <% }%>
+                <% } %>
             </div>
         </nav>
         <%
@@ -102,7 +103,7 @@
             <div class="info">
                 <h2>Mi Cuenta</h2>
                 <form action="/Adopcion_de_animales_web/PerfilUsuario" method="post" enctype="multipart/form-data" class="form-section" id="imageForm">
-                    <img id="imagenPerfil" alt="Imagen-Perfil" width="150">
+                    <img id="imagenPerfil" alt="Imagen-Perfil">
                     <div>
                         <input type="file" name="profileImage" accept="image/*" id="fileInput" style="display: none;">
                         <button type="button" class="btn" onclick="document.getElementById('fileInput').click();">
@@ -127,7 +128,7 @@
             </div>
 
             <div class="publicaciones">
-                <h2>Mis Publicaciones</h2>
+                <h2>Mis Mascotas en Adopción</h2>
                 <!-- Ejemplo de una tarjeta de publicación -->
                 <div class="card">
                     <h3>Nombre de la Mascota</h3>

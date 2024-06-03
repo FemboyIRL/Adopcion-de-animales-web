@@ -11,19 +11,20 @@
     <body>
         <nav class="navbar">
             <div class="navbar-container">
-                <a href="index.jsp" class="navbar-logo">
+                <a href="../../index.jsp" class="navbar-logo">
                     <img src="../../assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
                 </a>
                 <ul class="navbar-menu">
-                    <li><a href="index.jsp">Inicio</a></li>
-                    <li><a href="user/adopciones/screen.jsp">Adopciones</a></li>
-                    <li><a href="user/como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
-                    <li><a href="user/dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                    <li><a href="../../index.jsp">Inicio</a></li>
+                    <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
+                    <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
+                    <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
                 </ul>
-                <% if (session.getAttribute("usuario") != null) { %>
+                <% if (session.getAttribute(
+                            "usuario") != null) { %>
                 <div class="account">
-                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = 'logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>

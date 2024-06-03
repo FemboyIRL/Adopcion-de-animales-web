@@ -1,61 +1,4 @@
-<%
-    class Animal {
-
-        private int id;
-        private String nombre;
-        private int edad;
-        private String especie;
-        private String raza;
-        private String otrasCaracteristicas;
-        private int idUsuario;
-        private String Sexo;
-
-        public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario, String Sexo) {
-            this.id = id;
-            this.nombre = nombre;
-            this.edad = edad;
-            this.especie = especie;
-            this.raza = raza;
-            this.otrasCaracteristicas = otrasCaracteristicas;
-            this.idUsuario = idUsuario;
-            this.Sexo = Sexo;
-        }
-
-        // Getters
-        public int getId() {
-            return id;
-        }
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public int getEdad() {
-            return edad;
-        }
-
-        public String getEspecie() {
-            return especie;
-        }
-
-        public String getRaza() {
-            return raza;
-        }
-
-        public String getOtrasCaracteristicas() {
-            return otrasCaracteristicas;
-        }
-
-        public int getIdUsuario() {
-            return idUsuario;
-        }
-
-        public String getSexo() {
-            return Sexo;
-        }
-    }
-%>
-
+<%@page import="models.Animal"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -68,7 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Adopción de Animales</title>
-        
+
         <link rel="stylesheet" href="stylesAnimal.css">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -82,14 +25,15 @@
                 </a>
                 <ul class="navbar-menu">
                     <li><a href="../../index.jsp">Inicio</a></li>
-                    <li><a href="screen.jsp">Adopciones</a></li>
+                    <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
                 </ul>
-                <% if (session.getAttribute("id") != null) { %>
+                <% if (session.getAttribute(
+                            "usuario") != null) { %>
                 <div class="account">
-                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = 'user/mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
+                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>

@@ -1,12 +1,13 @@
 <%@ page import="java.sql.*" %>
 <%
-    String idUsuarioStr = (String) session.getAttribute("id");
-    Integer idUsuario = Integer.parseInt(idUsuarioStr);
-    String idMascota = request.getParameter("idMascota");
-    if (session.getAttribute("id") == null) {
+     if (session.getAttribute("id") == null) {
         response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
         return;
     }
+    String idUsuarioStr = (String) session.getAttribute("id");
+    Integer idUsuario = Integer.parseInt(idUsuarioStr);
+    String idMascota = request.getParameter("idMascota");
+   
 %>
 <!DOCTYPE html>
 <html lang="es">
