@@ -111,7 +111,8 @@
                                         rs.getString("Raza"),
                                         rs.getString("OtrasCaracteristicas"),
                                         rs.getInt("IDUsuario"),
-                                        rs.getString("Sexo")
+                                        rs.getString("Sexo"),
+                                        rs.getString("Size")
                                 );
                                 animales.add(animal);
                             }

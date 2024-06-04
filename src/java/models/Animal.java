@@ -1,6 +1,5 @@
 package models;
 
-
 public class Animal {
     private int id;
     private String nombre;
@@ -10,8 +9,9 @@ public class Animal {
     private String otrasCaracteristicas;
     private int idUsuario;
     private String sexo;
-
-    public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario, String sexo) {
+    private String size;
+    
+    public Animal(int id, String nombre, int edad, String especie, String raza, String otrasCaracteristicas, int idUsuario, String sexo, String size) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -20,6 +20,7 @@ public class Animal {
         this.otrasCaracteristicas = otrasCaracteristicas;
         this.idUsuario = idUsuario;
         this.sexo = sexo;
+        this.size = size;
     }
 
     public int getId() {
@@ -52,6 +53,10 @@ public class Animal {
 
     public String getSexo() {
         return sexo;
+    }
+    
+    public String getSize(){
+        return size;
     }
 }
 

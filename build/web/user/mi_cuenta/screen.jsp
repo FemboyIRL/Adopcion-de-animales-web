@@ -1,18 +1,23 @@
+<%@page import="models.SolicitudAdopcion"%>
+<%@page import="models.Animal"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="models.Usuario"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*, java.nio.file.*, java.sql.*, javax.servlet.http.*, javax.servlet.*, javax.servlet.annotation.*" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <title>Mi Cuenta</title>
-        <link href="styles.css" rel="stylesheet">
+        <link href="stylesCuenta.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script defer src="script.js"></script>
     </head>
     <body>
-          <nav class="navbar">
+        <nav class="navbar">
             <div class="navbar-container">
                 <a href="../../index.jsp" class="navbar-logo">
                     <img src="../../assets/Icons/logo.png" alt="Patitas Felices Veterinaria">
@@ -129,18 +134,86 @@
 
             <div class="publicaciones">
                 <h2>Mis Mascotas en Adopción</h2>
-                <!-- Ejemplo de una tarjeta de publicación -->
+                <%
+                    List<Animal> mascotas = new ArrayList<Animal>();
+
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        conn = DriverManager.getConnection(url);
+                        String query = "SELECT * FROM Mascotas WHERE IDUsuario = ?";
+                        pstmt = conn.prepareStatement(query);
+                        pstmt.setInt(1, idUsuario);
+                        rs = pstmt.executeQuery();
+
+                        // Itera sobre el resultado de la consulta y crea objetos Animal
+                        while (rs.next()) {
+                            Animal animal = new Animal(
+                                    rs.getInt("ID"),
+                                    rs.getString("Nombre"),
+                                    rs.getInt("Edad"),
+                                    rs.getString("Especie"),
+                                    rs.getString("Raza"),
+                                    rs.getString("OtrasCaracteristicas"),
+                                    rs.getInt("IDUsuario"),
+                                    rs.getString("Sexo"),
+                                    rs.getString("Size")
+                            );
+                            mascotas.add(animal);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out.println("<p>Error al conectar con la base de datos.</p>");
+                    } finally {
+                        // Cierra los recursos
+                        if (rs != null) {
+                            try {
+                                rs.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (pstmt != null) {
+                            try {
+                                pstmt.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (conn != null) {
+                            try {
+                                conn.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                %>
+                <% for (Animal mascota : mascotas) {%>
                 <div class="card">
-                    <h3>Nombre de la Mascota</h3>
-                    <p>Edad: 2 años</p>
-                    <p>Especie: Perro</p>
-                    <p>Raza: Labrador</p>
-                    <p>Sexo: Macho</p>
-                    <p>Otras Características: Juguetón, amigable</p>
+                    <div class="cardImage">
+                        <img src="../../assets/images/mascotas/<%= mascota.getId()%>.jpg" alt="animalId=<%= mascota.getId()%>">
+                    </div>
+                    <div class="cardInfo">
+                        <h3><%= mascota.getNombre()%></h3>
+                        <p>Edad: <%= mascota.getEdad()%> meses</p>
+                        <p>Especie: <%= mascota.getEspecie()%></p>
+                        <p>Raza: <%= mascota.getRaza()%></p>
+                        <p>Sexo: <%= mascota.getSexo()%></p>
+                    </div>
+                    
+                                                <a href="solicitudesAdopcion.jsp?idMascota=<%= mascota.getId()%>">Ver Solicitudes</a>
+    
+                    <div class="cardButtons">
+                        <a href="eliminarMascota.jsp?idMascota=<%= mascota.getId()%>">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                            <br>
+                    </div>
                 </div>
-                <!-- Repetir para más publicaciones -->
+                <% }%>
             </div>
         </div>
+
         <!-- Modal -->
         <div id="myModal" class="modal">
             <div class="modal-content">
@@ -161,9 +234,9 @@
             </div>
         </div>
         <script>
-           var img = document.getElementById('imagenPerfil');
-           var imgSrc = "../../assets/images/fotoPerfil/<%= idUsuario%>.jpg";
-           var defaultSrc = "../../assets/images/fotoPerfil/user.png";
+            var img = document.getElementById('imagenPerfil');
+            var imgSrc = "../../assets/images/fotoPerfil/<%= idUsuario%>.jpg";
+            var defaultSrc = "../../assets/images/fotoPerfil/user.png";
 
             img.onerror = function () {
                 img.src = defaultSrc;

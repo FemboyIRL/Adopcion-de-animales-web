@@ -56,6 +56,7 @@
                             + "Mascotas.Raza, "
                             + "Mascotas.OtrasCaracteristicas, "
                             + "Mascotas.Sexo, "
+                            + "Mascotas.Size, "
                             + "Usuarios.ID AS UsuarioID, "
                             + "Usuarios.NombreUsuario, "
                             + "Usuarios.CorreoElectronico, "
@@ -77,7 +78,8 @@
                                 rs.getString("Raza"),
                                 rs.getString("OtrasCaracteristicas"),
                                 rs.getInt("UsuarioID"),
-                                rs.getString("Sexo")
+                                rs.getString("Sexo"),
+                                rs.getString("Size")
                         );
 
                         usuario = new Usuario(
@@ -127,7 +129,8 @@
                             <p><span><%= animal.getOtrasCaracteristicas()%></span></p>
                         </div>
                         <input type="hidden" name="idMascota" value="<%= animal.getId()%>">
-                        <button type="submit">SOLICITAR ADOPCIÓN</button>
+                                                <button type="submit">SOLICITAR ADOPCIÓN</button>
+
                     </form>
                 </div>
             </div>
