@@ -45,7 +45,7 @@
                 </div>
 
                 <% } else { %>
-                <button class="navbar-login" onclick="window.location.href = 'registerlogin/screen.jsp'">Iniciar sesión</button>
+                <button class="navbar-login" onclick="window.location.href = '../../registerlogin/screen.jsp'">Iniciar sesión</button>
                 <% } %>
             </div>
         </nav>

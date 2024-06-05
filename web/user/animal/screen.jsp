@@ -1,3 +1,15 @@
+
+<%
+    if (session.getAttribute("id") == null) {
+        response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
+        return;
+    } else {
+        String idUsuarioStr = (String) session.getAttribute("id");
+        Integer idUsuario = Integer.parseInt(idUsuarioStr);
+    }
+    Integer idUsuario = 0;
+    
+%>
 <%@page import="models.Usuario"%>
 <%@page import="models.Animal"%>
 <%@page import="java.sql.ResultSet"%>
@@ -24,8 +36,7 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
-                        <%
-                            if (session.getAttribute(
+                        <%                            if (session.getAttribute(
                                     "usuario") != null) {
                         %>
                     <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
@@ -41,7 +52,7 @@
                 </div>
 
                 <% } else { %>
-                <button class="navbar-login" onclick="window.location.href = 'registerlogin/screen.jsp'">Iniciar sesión</button>
+                <button class="navbar-login" onclick="window.location.href = '../../registerlogin/screen.jsp'">Iniciar sesión</button>
                 <% } %>
             </div>
         </nav>
@@ -137,10 +148,7 @@
                             <p><span><%= animal.getOtrasCaracteristicas()%></span></p>
                         </div>
                         <input type="hidden" name="idMascota" value="<%= animal.getId()%>">
-                        <%
-                            String idUsuarioStr = (String) session.getAttribute("id");
-                            Integer idUsuario = Integer.parseInt(idUsuarioStr);
-                        %>
+
                         <% if (usuario.getId() == idUsuario) { %>
                         <button type="submit" disabled>YA ERES EL DUEÑO DE ESTA MASCOTA</button>
                         <% } else { %>
