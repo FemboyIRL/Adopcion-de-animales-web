@@ -7,6 +7,20 @@
     z-index: 1000; 
 }
 
+.account button {
+    background-color: #ffcc66;
+    color: #333; 
+    padding: 15px 30px; 
+    border: 2px solid #ff9900; 
+    border-radius: 10px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    text-decoration: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+    display: inline-block; 
+}
+
 .navbar-container {
     display: flex;
     justify-content: space-between;
@@ -268,4 +282,39 @@
 
 .solicitud{
     position: absolute;
+}
+
+#error, #success {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: slide-in 0.5s ease-in-out;
+    color: white;
+}
+#error {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+#success {
+    background-color: rgba(40, 167, 69, 0.3);
+}
+#error:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+#success:hover {
+    background-color: rgba(40, 167, 69, 1);
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

@@ -20,8 +20,8 @@
     String veterinarioPlan = request.getParameter("veterinarioPlan");
 
     String url = "jdbc:sqlite:/C:/Users/luisr/OneDrive/Escritorio/Escuela del mal/Desarrollo web/Paginas/Adopcion de animales web/web/assets/bd/centroAdopcion.db";
-    String sql = "INSERT INTO SolicitudesAdopcion (IDUsuario, IDMascota, EstadoSolicitud, InformacionFormulario) VALUES (?, ?, ?, ?)";
-    
+    String sqlInsert = "INSERT INTO SolicitudesAdopcion (IDUsuario, IDMascota, EstadoSolicitud, InformacionFormulario) VALUES (?, ?, ?, ?)";
+
     StringBuilder infoFormulario = new StringBuilder();
     infoFormulario.append("Razón para Adoptar: ").append(razonAdopcion).append("\n");
     infoFormulario.append("Tiempo Disponible: ").append(tiempoDisponible).append("\n");
@@ -37,22 +37,39 @@
     try {
         Class.forName("org.sqlite.JDBC");
         Connection conn = DriverManager.getConnection(url);
-        PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, idUsuario);
-        pstmt.setInt(2, idMascota);
-        pstmt.setString(3, "Pendiente"); // Estado inicial de la solicitud
-        pstmt.setString(4, infoFormulario.toString());
+        // Verificar si ya existe una solicitud para el mismo usuario y mascota
+        String query = "SELECT COUNT(*) FROM SolicitudesAdopcion WHERE IDUsuario = ? AND IDMascota = ?";
+        PreparedStatement pstmtCheck = conn.prepareStatement(query);
+        pstmtCheck.setInt(1, idUsuario);
+        pstmtCheck.setInt(2, idMascota);
+        ResultSet rsCheck = pstmtCheck.executeQuery();
 
-        pstmt.executeUpdate();
+        if (rsCheck.next() && rsCheck.getInt(1) > 0) {
+            // Ya existe una solicitud para este usuario y mascota
+            response.sendRedirect("screen.jsp?errorSolicitud=1");
+        } else {
+            // No hay solicitudes previas
+            PreparedStatement pstmtInsert = conn.prepareStatement(sqlInsert);
 
-        pstmt.close();
+            pstmtInsert.setInt(1, idUsuario);
+            pstmtInsert.setInt(2, idMascota);
+            pstmtInsert.setString(3, "Pendiente"); // Estado inicial de la solicitud
+            pstmtInsert.setString(4, infoFormulario.toString());
+
+            pstmtInsert.executeUpdate();
+            pstmtInsert.close();
+
+            response.sendRedirect("../../index.jsp?solicitudCreada=1");
+        }
+
+        rsCheck.close();
+        pstmtCheck.close();
         conn.close();
-
-        response.sendRedirect("../../index.jsp?solicitudCreada=1"); // Redirige a una página de confirmación
-
     } catch (Exception e) {
         e.printStackTrace();
         out.println("<p>Error al procesar la solicitud de adopción.</p>" + e);
+        response.sendRedirect("screen.jsp?error=1");
+
     }
 %>

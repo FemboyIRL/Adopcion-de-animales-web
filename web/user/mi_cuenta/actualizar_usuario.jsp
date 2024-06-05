@@ -1,5 +1,10 @@
 <%@ page import="java.sql.*" %>
 <%
+     if (session.getAttribute("id") == null) {
+        response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
+        return;
+    }
+     
     String nuevoNombreUsuario = request.getParameter("nombreUsuario");
     String nuevoCorreo = request.getParameter("correo");
     String nuevoTelefono = request.getParameter("telefono");
@@ -33,6 +38,7 @@
     } catch (Exception e) {
         e.printStackTrace();
         out.println("<p>Error al conectar con la base de datos o al obtener los datos del usuario.</p>");
+        response.sendRedirect("screen.jsp?error=1");
     }
 
     if (nuevoNombreUsuario.equals(nombreUsuarioActual) && nuevoCorreo.equals(correoActual) && nuevoTelefono.equals(telefonoActual)) {

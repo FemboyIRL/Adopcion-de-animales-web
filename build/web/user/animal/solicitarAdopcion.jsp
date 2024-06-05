@@ -1,13 +1,13 @@
 <%@ page import="java.sql.*" %>
 <%
-     if (session.getAttribute("id") == null) {
+    if (session.getAttribute("id") == null) {
         response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
         return;
     }
     String idUsuarioStr = (String) session.getAttribute("id");
     Integer idUsuario = Integer.parseInt(idUsuarioStr);
     String idMascota = request.getParameter("idMascota");
-   
+
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,8 +48,9 @@
         </style>
     </head>
     <body>
-        <h2>Formulario de Adopción</h2>
         <form action="procesarSolicitudAdopcion.jsp" method="post">
+            <h2>Formulario de Adopción</h2>
+
             <input type="hidden" name="idUsuario" value="<%= idUsuario%>">
             <input type="hidden" name="idMascota" value="<%= idMascota%>">
 

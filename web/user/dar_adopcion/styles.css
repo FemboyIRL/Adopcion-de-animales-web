@@ -7,6 +7,20 @@
     z-index: 1000; 
 }
 
+.account button {
+    background-color: #ffcc66;
+    color: #333; 
+    padding: 15px 30px; 
+    border: 2px solid #ff9900; 
+    border-radius: 10px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    text-decoration: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+    display: inline-block; 
+}
+
 .navbar-container {
     display: flex;
     justify-content: space-between;

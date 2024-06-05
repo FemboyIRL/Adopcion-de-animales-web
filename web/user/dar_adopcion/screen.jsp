@@ -1,9 +1,15 @@
+<%
+    if (session.getAttribute("id") == null) {
+        response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pantalla de Inicio - Patitas Felices Veterinaria</title>
+        <title>Dar Adopcion</title>
         <script defer src="script.js"></script>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -19,12 +25,20 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                        <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                        <%
+                            }
+                        %>
                 </ul>
                 <% if (session.getAttribute(
                             "usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../../logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
@@ -40,7 +54,7 @@
                 <div class="adoptForm">
                     <form action="/Adopcion_de_animales_web/SvProcesarFormulario" method="POST" enctype="multipart/form-data" class="adoptForm">
                         <label for="motivo">Motivo de dar en adopción:</label>
-                        <select name="motivo" id="motivo" onchange="mostrarOtroMotivo()">
+                        <select name="motivo" required id="motivo" onchange="mostrarOtroMotivo()">
                             <option value="falta_espacio">Falta de espacio</option>
                             <option value="cambio_circunstancias">Cambio de circunstancias personales</option>
                             <option value="no_puede_cuidar">No puedo cuidar a la mascota</option>
@@ -51,7 +65,7 @@
                         <textarea id="otroMotivo" name="otroMotivo" style="display: none; resize: none;"></textarea>
 
                         <label for="comportamiento">Tipo de comportamiento:</label>
-                        <select name="comportamiento" id="comportamiento">
+                        <select name="comportamiento" required id="comportamiento">
                             <option value="docil">Dócil</option>
                             <option value="activo">Activo</option>
                             <option value="agresivo">Agresivo</option>
@@ -59,48 +73,48 @@
                         </select>
 
                         <label for="vacunada">¿La mascota está vacunada?</label>
-                        <select name="vacunada" id="vacunada">
+                        <select name="vacunada" id="vacunada" required>
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
 
                         <label for="pertenece">¿La mascota te pertenece?</label>
-                        <select name="pertenece" id="pertenece">
+                        <select name="pertenece" id="pertenece" required>
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
 
                         <label for="tipo">Tipo de mascota:</label>
-                        <select name="tipo" id="tipo">
+                        <select name="tipo" id="tipo" required>
                             <option value="Perro">Perro</option>
                             <option value="Gato">Gato</option>
                             <option value="otro">Otro</option>
                         </select>
 
                         <label for="raza">Raza:</label>
-                        <input type="text" id="raza" name="raza">
+                        <input type="text" id="raza" name="raza" required>
 
                         <label for="nombre">Nombre de la mascota:</label>
-                        <input type="text" id="nombre" name="nombre">
+                        <input type="text" id="nombre" name="nombre" required>
 
                         <label for="tamaño">Tamaño de la mascota:</label>
-                        <select name="tamaño" id="tamaño">
+                        <select name="tamaño" id="tamaño" required>
                             <option value="Pequeño">Pequeño</option>
                             <option value="Mediano">Mediano</option>
                             <option value="Grande">Grande</option>
                         </select>
 
                         <label for="edad">Edad de la mascota(en meses):</label>
-                        <input type="number" id="edad" name="edad" min="0">
+                        <input type="number" id="edad" name="edad" min="0" required>
 
                         <label for="sexo">Sexo de la mascota:</label>
-                        <select name="sexo" id="sexo">
+                        <select name="sexo" id="sexo" required>
                             <option value="Macho">Macho</option>
                             <option value="Hembra">Hembra</option>
                         </select>
 
                         <label for="imagen">Imagen de la mascota:</label>
-                        <input type="file" id="imagen" name="imagen">
+                        <input type="file" id="imagen" name="imagen" required> 
 
                         <input type="submit" value="Enviar">
                     </form>

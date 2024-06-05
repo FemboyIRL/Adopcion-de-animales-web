@@ -24,12 +24,20 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                        <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                        <%
+                            }
+                        %>
                 </ul>
                 <% if (session.getAttribute(
                             "usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../../logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
@@ -129,13 +137,19 @@
                             <p><span><%= animal.getOtrasCaracteristicas()%></span></p>
                         </div>
                         <input type="hidden" name="idMascota" value="<%= animal.getId()%>">
-                                                <button type="submit">SOLICITAR ADOPCIÓN</button>
+                        <%
+                            String idUsuarioStr = (String) session.getAttribute("id");
+                            Integer idUsuario = Integer.parseInt(idUsuarioStr);
+                        %>
+                        <% if (usuario.getId() == idUsuario) { %>
+                        <button type="submit" disabled>YA ERES EL DUEÑO DE ESTA MASCOTA</button>
+                        <% } else { %>
+                        <button type="submit">SOLICITAR ADOPCIÓN</button>
+                        <% } %>
 
                     </form>
                 </div>
             </div>
-
-
             <%
             } else {
             %>
@@ -143,6 +157,20 @@
             <%
                 }
             %>
+            <div id="error">
+                <%
+                    String errorSolicitud = request.getParameter("errorSolicitud");
+                    String error = request.getParameter("error");
+
+                    if (errorSolicitud
+                            != null) {
+                        out.print("<i class='fa-regular fa-circle-check'></i> Ya has solicitado adoptar esta mascota.");
+                    } else if (error
+                            != null) {
+                        out.print("<i class='fa-regular fa-circle-check'></i> Error al procesar la solicitud de adopción.");
+                    }
+                %> 
+            </div>
         </main>
     </body>
 </html>

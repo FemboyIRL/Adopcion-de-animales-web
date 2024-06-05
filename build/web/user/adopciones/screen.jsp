@@ -28,12 +28,20 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                        <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                        <%
+                            }
+                        %>
                 </ul>
                 <% if (session.getAttribute(
                             "usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../../logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
@@ -62,7 +70,7 @@
                         <option value="Adulto">Adulto</option>
                     </select>
 
-                    <label for="tamaño">Raza:</label>
+                    <label for="tamaño">Tamaño:</label>
                     <select id="tamaño" name="tamaño">
                         <option value="todos">Todos</option>
                         <option value="Pequeño">Pequeño</option>
@@ -80,10 +88,26 @@
                         String url = "jdbc:sqlite:/C:/Users/luisr/OneDrive/Escritorio/Escuela del mal/Desarrollo web/Paginas/Adopcion de animales web/web/assets/bd/centroAdopcion.db";
                         List<Animal> animales = new ArrayList<Animal>();
                         String especie = request.getParameter("especie");
+                        String edad = request.getParameter("edad");
+                        String tamaño = request.getParameter("tamaño");
 
                         StringBuilder sql = new StringBuilder("SELECT * FROM Mascotas WHERE 1=1");
                         if (especie != null && !especie.equals("todos")) {
                             sql.append(" AND especie = ?");
+                        }
+
+                        if (edad != null && !edad.equals("todas")) {
+                            if (edad.equals("Cachorro")) {
+                                edad = "12"; 
+                                sql.append(" AND edad < ?");
+                            } else if (edad.equals("Adulto")) {
+                                edad = "12"; 
+                                sql.append(" AND edad >= ?");
+                            }
+                        }
+
+                        if (tamaño != null && !tamaño.equals("todos")) {
+                            sql.append(" AND size = ?");
                         }
 
                         try {
@@ -94,6 +118,12 @@
                             int paramIndex = 1;
                             if (especie != null && !especie.equals("todos")) {
                                 pstmt.setString(paramIndex++, especie);
+                            }
+                            if (edad != null && !edad.equals("todas")) {
+                                pstmt.setString(paramIndex++, edad);
+                            }
+                            if (tamaño != null && !tamaño.equals("todos")) {
+                                pstmt.setString(paramIndex, tamaño);
                             }
 
                             ResultSet rs = pstmt.executeQuery();
@@ -132,7 +162,7 @@
                         <div class="intro">
                             <h3><%= animal.getNombre()%></h3>
                             <p>Edad: <%= animal.getEdad()%> meses</p>
-                            <p>Especie: <%= animal.getEspecie()%></p>
+                            <p>Sexo: <%= animal.getSexo()%></p>
                         </div>
                     </div>
                     <%

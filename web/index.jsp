@@ -26,6 +26,14 @@
                     <li><a href="user/adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="user/como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="user/dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                        <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="user/mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                        <%
+                            }
+                        %>
                 </ul>
                 <% if (session.getAttribute("usuario") != null) { %>
                 <div class="account">
@@ -192,18 +200,19 @@
                 String loginExitoso = request.getParameter("loginExitoso");
                 String sesionCerrada = request.getParameter("sesionCerrada");
                 String registroMascota = request.getParameter("registroMascota");
-
+                String solicitudCreada = request.getParameter("solicitudCreada");
                 if (loginExitoso
                         != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Inicio de sesión exitoso");
-                    return;
                 } else if (sesionCerrada
                         != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Sesión cerrada exitosamente");
-                    return;
-                } else if (registroMascota != null) {
+                } else if (registroMascota
+                        != null) {
                     out.print("<i class='fa-regular fa-circle-check'></i> Mascota dada en adopciön correctamente");
-                    return;
+                } else if (solicitudCreada
+                        != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> Solicitud de adopción creada correctamente");
                 }
             %>
         </div>

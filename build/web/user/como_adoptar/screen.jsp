@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Detalles del Animal</title>
+        <title>Como Adoptar</title>
         <link rel="stylesheet" href="stylesAdoptar.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
@@ -17,12 +17,20 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                     <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                    <%
+                    }
+                    %>
                 </ul>
                 <% if (session.getAttribute(
                             "usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../../logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>

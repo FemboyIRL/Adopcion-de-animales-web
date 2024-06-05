@@ -45,7 +45,7 @@ public class SvProcesarFormulario extends HttpServlet {
         if (motivo == null || comportamiento == null || vacunada == null || pertenece == null ||
             tipo == null || raza == null || nombre == null || tamaño == null || 
             edadStr == null || sexo == null || imagenPart == null) {
-            response.sendRedirect("screen.jsp?errorVacio=1");
+            response.sendRedirect("index.jsp?error=1");
             return;
         }
 
@@ -53,7 +53,7 @@ public class SvProcesarFormulario extends HttpServlet {
         try {
             edad = Integer.parseInt(edadStr);
         } catch (NumberFormatException e) {
-            response.sendRedirect("screen.jsp?errorEdad=1");
+            response.sendRedirect("index.jsp?errorEdad=1");
             return;
         }
 

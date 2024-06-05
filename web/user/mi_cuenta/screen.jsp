@@ -1,3 +1,9 @@
+<%
+if (session.getAttribute("id") == null) {
+        response.sendRedirect("../../registerlogin/screen.jsp?errorSesion=1");
+        return;
+    }
+%>
 <%@page import="models.SolicitudAdopcion"%>
 <%@page import="models.Animal"%>
 <%@page import="java.util.List"%>
@@ -27,12 +33,20 @@
                     <li><a href="../adopciones/screen.jsp">Adopciones</a></li>
                     <li><a href="../como_adoptar/screen.jsp">¿Cómo adoptar?</a></li>
                     <li><a href="../dar_adopcion/screen.jsp">Dar en adopción</a></li>
+                        <%
+                            if (session.getAttribute(
+                                    "usuario") != null) {
+                        %>
+                    <li><a href="../mis_solicitudes/screen.jsp">Mis Solicitudes</a></li>
+                    <%
+                    }
+                    %>
                 </ul>
                 <% if (session.getAttribute(
                             "usuario") != null) { %>
                 <div class="account">
                     <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-regular fa-user"></i></button>
-                    <button onclick="window.location.href = '../mi_cuenta/screen.jsp'"><i class="fa-solid fa-sign-out"></i></button>
+                    <button onclick="window.location.href = '../../logout/logout.jsp'"><i class="fa-solid fa-sign-out"></i></button>
                 </div>
 
                 <% } else { %>
@@ -200,14 +214,14 @@
                         <p>Raza: <%= mascota.getRaza()%></p>
                         <p>Sexo: <%= mascota.getSexo()%></p>
                     </div>
-                    
-                                                <a href="solicitudesAdopcion.jsp?idMascota=<%= mascota.getId()%>">Ver Solicitudes</a>
-    
+
+                    <a href="solicitudesAdopcion.jsp?idMascota=<%= mascota.getId()%>">Ver Solicitudes</a>
+
                     <div class="cardButtons">
                         <a href="eliminarMascota.jsp?idMascota=<%= mascota.getId()%>">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                            <br>
+                        <br>
                     </div>
                 </div>
                 <% }%>
@@ -232,6 +246,44 @@
                     <input type="submit" value="Guardar cambios" class="btn">
                 </form>
             </div>
+        </div>
+
+        <div id="success">
+            <%
+                String mascotaEliminada = request.getParameter("mascotaEliminada");
+                String solicitudAprobada = request.getParameter("solicitudAprobada");
+                String datosActualizados = request.getParameter("datosActualizados");
+
+                if (mascotaEliminada
+                        != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> La mascota se eliminó correctamente.");
+                } else if (solicitudAprobada != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> Solicitud aprobada exitosamente");
+                } else if (datosActualizados != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> ¡Los datos del usuario fueron actualizados con éxito!");
+                }
+
+            %>
+        </div>
+        <div class="error">
+            <%                String errorEliminar = request.getParameter("errorEliminar");
+                String errorSolicitud = request.getParameter("errorSolicitud");
+                String errorIguales = request.getParameter("errorIguales");
+                String error = request.getParameter("error");
+
+                if (errorEliminar
+                        != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> No se encontró ninguna mascota con el ID proporcionado.");
+                } else if (errorSolicitud != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> No se encontró la solicitud especificada.");
+                } else if (error != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> No se pudo actualizar los datos del usuario. Por favor, inténtalo de nuevo.");
+                } else if (errorIguales != null) {
+                    out.print("<i class='fa-regular fa-circle-check'></i> Los nuevos datos son iguales a los actuales. No se realizaron cambios.");
+                }
+
+
+            %>
         </div>
         <script>
             var img = document.getElementById('imagenPerfil');
