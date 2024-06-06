@@ -143,7 +143,7 @@
                     <div class="card">
                         <div class="informacionUsuario">
                             <h3>Información del Dueño</h3>
-                            <img alt="imagenDueño" id="imagenPerfil" data-user-id="<%= animal.getIdUsuario()%>">
+                            <img alt="imagenDueño" class="imagenPerfil" data-user-id="<%= animal.getIdUsuario()%>">
                             <p>Nombre Usuario: <%= solicitud.getNombreUsuario()%></p>
                             <p>Correo Electrónico: <%= solicitud.getCorreoElectronico()%></p>
                             <p>Teléfono: <%= solicitud.getTelefono()%></p>
@@ -152,7 +152,7 @@
                             <h3>Información de la Mascota</h3>
                             <img src="../../assets/images/mascotas/<%= animal.getId()%>.jpg">
                             <p>Nombre: <%= animal.getNombre()%></p>
-                            <p>Edad: <%= animal.getEdad()%></p>
+                            <p>Edad: <%= animal.getEdad()%> meses</p>
                             <p>Especie: <%= animal.getEspecie()%></p>
                             <p>Raza: <%= animal.getRaza()%></p>
                             <p>Sexo: <%= animal.getSexo()%></p>
@@ -192,16 +192,20 @@
             %> 
         </div>
         <script>
-            var img = document.getElementById('imagenPerfil');
-            var userId = img.getAttribute('data-user-id');
-            var imgSrc = "../../assets/images/fotoPerfil/" + userId + ".jpg";
-            var defaultSrc = "../../assets/images/fotoPerfil/user.png";
+            var images = document.querySelectorAll('.imagenPerfil');
 
-            img.onerror = function () {
-                img.src = defaultSrc;
-            };
+            images.forEach(function (img) {
+                var userId = img.getAttribute('data-user-id');
+                var imgSrc = "../../assets/images/fotoPerfil/" + userId + ".jpg";
+                var defaultSrc = "../../assets/images/fotoPerfil/user.png";
 
-            img.src = imgSrc;
+                img.onerror = function () {
+                    img.src = defaultSrc;
+                };
+
+                img.src = imgSrc;
+            });
         </script>
+
     </body>
 </html>

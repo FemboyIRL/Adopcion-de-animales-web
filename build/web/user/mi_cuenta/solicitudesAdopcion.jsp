@@ -88,7 +88,7 @@
             <div class="solicitudes-list">
                 <% for (SolicitudAdopcion solicitud : solicitudes) {%>
                 <div class="solicitud-card">
-                    <img src="../../assets/images/fotoPerfil/<%= solicitud.getIdUsuario()%>.jpg" alt="fotoPerfil">
+                    <img alt="imagenDueño" class="imagenPerfil" data-user-id="<%= solicitud.getIdUsuario()%>">
                     <p><strong>ID Usuario:</strong> <%= solicitud.getIdUsuario()%></p>
                     <p><strong>Nombre:</strong> <%= solicitud.getNombreUsuario()%></p>
                     <p><strong>Correo Electrónico:</strong> <%= solicitud.getCorreoElectronico()%></p>
@@ -96,13 +96,30 @@
                     <p><strong>Estado de la Solicitud:</strong> <%= solicitud.getEstadoSolicitud()%></p>
                     <p><strong>Información:</strong> <%= solicitud.getInformacionFormulario()%></p>
                     <div class="actions">
+                        <% if (solicitud.getEstadoSolicitud().equals("Pendiente")) {%>
                         <a href="aprobarSolicitud.jsp?idSolicitud=<%= solicitud.getId()%>" class="btn">Aprobar</a>
                         <a href="rechazarSolicitud.jsp?idSolicitud=<%= solicitud.getId()%>" class="btn" id="rechazar">Rechazar</a>
+                        <% } %>
                     </div>
                 </div>
                 <% }%>
             </div>
             <a href="javascript:history.back()" class="btn">Volver</a>
         </div>
+        <script>
+            var images = document.querySelectorAll('.imagenPerfil');
+
+            images.forEach(function (img) {
+                var userId = img.getAttribute('data-user-id');
+                var imgSrc = "../../assets/images/fotoPerfil/" + userId + ".jpg";
+                var defaultSrc = "../../assets/images/fotoPerfil/user.png";
+
+                img.onerror = function () {
+                    img.src = defaultSrc;
+                };
+
+                img.src = imgSrc;
+            });
+        </script>
     </body>
 </html>
